@@ -201,3 +201,37 @@ def plot_small_ts(X_dataset, Y_dataset):
         plt.subplot(1, X_dataset.shape[0], i+1)  # 1 row, X_train_overfit.shape[0] columns, i+1 plot
         plt.imshow(X_dataset[i], cmap=plt.get_cmap('gray'))
         plt.title(str(Y_dataset[i]))
+
+#Plot intermediate results after convolutions in the CNN
+def plot_intermediate_conv_results(layer_names, intermediate_results, layer_types): 
+    # Plot results
+    for layer_name, layer_results, layer_type in zip(layer_names, intermediate_results, layer_types):
+
+        if layer_type == 'Conv2D': # only plot conv_layers
+           # layer shape: shape [batch_size, height, width, channels]
+            n_channels = layer_results.shape[-1]  # get number of channels in current layer
+            size       = layer_results.shape[ 1]  # get channel size (hight = width)
+
+    
+            display_grid = np.zeros((size, size * n_channels))# build plot grid corresponding to layer sizes (one plot for each channel)
+
+
+    
+            for i in range(n_channels):# loop over all channels to sequentially plot them
+                x  = layer_results[0, :, :, i]
+                # Process the intermediate result back to pixel values to plot them
+                x -= x.mean()
+                x /= x.std ()
+                x *=  64
+                x += 128
+                x  = np.clip(x, 0, 255).astype('uint8') # check if in range [0-255] and change type to plot
+                display_grid[:, i * size : (i + 1) * size] = x # plot each channel into the grid
+
+            #-----------------
+            # Display the grid
+            #-----------------
+            scale = 20. / n_channels
+            plt.figure( figsize=(scale * n_channels, scale) )
+            plt.title ( layer_name )
+            plt.grid  ( False )
+            plt.imshow( display_grid, aspect='auto', cmap='viridis' )
