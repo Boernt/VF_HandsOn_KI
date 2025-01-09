@@ -236,6 +236,28 @@ def plot_intermediate_conv_results(layer_names, intermediate_results, layer_type
             plt.grid  ( False )
             
 
+# function to plot preditions of as ResNet50 as a bar chart
+def plot_resnet50_predictions_as_chart(decoded_predictions):
+    # extract class names and scores
+    class_names = [prediction[1] for prediction in decoded_predictions]
+    scores = [prediction[2] for prediction in decoded_predictions]
+
+    # build chart
+    fig, ax = plt.subplots(figsize=(10, 5))
+    indices = np.arange(len(scores))  # Erstelle die x-Achsen-Indizes
+
+    # plot bars
+    ax.bar(indices, scores, color='#009999')
+    ax.set_xlabel('Classes')
+    ax.set_ylabel('Probability')
+    ax.set_title('Model Prediction')
+    ax.set_xticks(indices)
+    ax.set_xticklabels(class_names)  # show class names on x axis
+    ax.set_yticks(np.arange(0, 1.1, 0.1))  # set y axis from 0 to 1
+    ax.grid(True)
+
+    plt.tight_layout()
+    plt.show()
 
 # function to display several images from a given dataset
 import os
