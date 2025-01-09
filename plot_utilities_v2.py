@@ -296,7 +296,7 @@ def plot_image_and_chart(sample_image, sample_label, predictions, class_names):
     plt.show()
 
 # function to display an additional downloaded image (not part of TS)on the left and the predictions a bar-chart on the right
-def plot_image_and_chart(image_path, label, model, class_names):
+def plot_new_image_and_chart(image_path, label, model, class_names):
     # create 2 plots
     fig, axes = plt.subplots(1, 2, figsize=(15, 5))  # 1 row, 2 columns
 
