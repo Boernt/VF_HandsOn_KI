@@ -268,4 +268,29 @@ def plot_images_from_dataset(dataset_path, class_names, start_index, num_images=
         ax.axis("off")
     
     plt.tight_layout()
-    plt.show()            
+    plt.show()      
+
+# function to display an image on the left and the predictions a bar-chart on the right
+def plot_image_and_chart(sample_image, sample_label, predictions, class_names):
+    # create 2 plots
+    fig, axes = plt.subplots(1, 2, figsize=(15, 5))  # 1 row, 2 columns
+
+    # left plot: show image and label
+    axes[0].imshow(sample_image.numpy().astype("uint8"))
+    axes[0].set_title(f"Label: {class_names[sample_label.numpy()]}")
+    axes[0].axis("off")  
+
+    # right plot: show predictions a bar-chart
+    probabilities = predictions[0]
+    indices = np.arange(len(probabilities))
+    axes[1].bar(indices, probabilities, color='#009999')
+    axes[1].set_xlabel('Classes')
+    axes[1].set_ylabel('Probability')
+    axes[1].set_title('Model Prediction')
+    axes[1].set_xticks(indices)
+    axes[1].set_xticklabels(class_names)  # show class names on x axis
+    axes[1].set_yticks(np.arange(0, 1.1, 0.1))
+    axes[1].grid(True)
+
+    plt.tight_layout()
+    plt.show()
