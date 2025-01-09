@@ -294,3 +294,31 @@ def plot_image_and_chart(sample_image, sample_label, predictions, class_names):
 
     plt.tight_layout()
     plt.show()
+
+# function to display an additional downloaded image (not part of TS)on the left and the predictions a bar-chart on the right
+def plot_image_and_chart(image_path, label, model, class_names):
+    # create 2 plots
+    fig, axes = plt.subplots(1, 2, figsize=(15, 5))  # 1 row, 2 columns
+
+    # left plot: show image and label
+    img = load_img(image_path)  # Load the image for displaying
+    axes[0].imshow(img)
+    axes[0].axis("off")  # Hide axes for better view
+    axes[0].set_title("Label: " + label)
+
+    # right plot: show predictions as a bar-chart
+    probabilities = predictions[0]
+    indices = np.arange(len(probabilities))
+    axes[1].bar(indices, probabilities, color='#009999')
+    axes[1].set_xlabel('Classes')
+    axes[1].set_ylabel('Probability')
+    axes[1].set_title('Model Prediction')
+    axes[1].set_xticks(indices)
+    axes[1].set_xticklabels(class_names)  # show class names on x-axis
+    axes[1].set_yticks(np.arange(0, 1.1, 0.1))
+    axes[1].grid(True)
+
+    plt.tight_layout()
+    plt.show()
+
+plot_image_and_chart(image_path, label, model, class_names)   
