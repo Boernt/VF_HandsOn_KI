@@ -319,6 +319,4 @@ def plot_new_image_and_chart(image_path, label, predictions, class_names):
     axes[1].grid(True)
 
     plt.tight_layout()
-    plt.show()
-
-plot_image_and_chart(image_path, label, model, class_names)   
+    plt.show()  
